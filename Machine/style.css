@@ -1,0 +1,41 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.container {
+    background-color: aliceblue;
+    color: rgb(59, 59, 59);
+    font-family: "SN Pro", sans-serif;
+    margin-top: 20px;
+    padding: 5%;
+    width: 90vh;
+    height: auto;
+    gap: 5px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 60px;
+}
+
+h1 {
+    font-family: "SN Pro", sans-serif;
+    margin-top: 5%;
+    color: aliceblue;
+    text-transform: uppercase;
+    font-weight: 900;
+}
+
+input {
+    border-radius: 20px;
+}
