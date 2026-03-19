@@ -1,0 +1,332 @@
+<!-- Criado por Marise Miranda | 2017.1 -->
+<!-- Adaptado por Matheus Matos | 2025.1 -->
+<!-- Usado como base por Ana Carolina | 2026.1 -->
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate Custom Machine</title>
+</head>
+
+<body>
+    <div class="principal">
+        <img src="custom.png" alt="Custom">
+        <h1> Ultimate Custom Machine </h1>
+    </div>
+    <div class="container">
+        <h3>Qual opção você escolhe?</h3>
+        <button onclick="operacoes()"> Operações </button>
+        <Button onclick="unitaria()"> Conversão Unitária </Button>
+    </div>
+</body>
+<script> 
+
+    function operacoes() {
+        document.querySelector('.container').innerHTML = `
+        <p class = "esquerda">Faça sua operação: </p>
+        <div class="operacoes">
+            <div>
+                <input type="number" id="id_n1">
+                <select id="id_baseN1">
+                    <option value="2">Binario</option>
+                    <option value="8">Octal</option>
+                    <option value="10">Decimal</option>
+                    <option value="16">Hexadecimal</option>
+                </select> 
+            </div>
+            <select id="id_operacao">
+                <option value="+">+</option>
+                <option value="-">-</option>
+                <option value="*">×</option>
+                <option value="/">÷</option>
+            </select>
+            <div>
+                <input type="text" id="id_n2">
+                <select id="id_baseN2">
+                    <option value="2">Binario</option>
+                    <option value="8">Octal</option>
+                    <option value="10">Decimal</option>
+                    <option value="16">Hexadecimal</option>
+                </select>   
+            </div>
+            
+        </div>
+        <label for="id_base_conversao" class = "esquerda">Escolha a base de conversão: </label>
+        <select name="base_resultado" id="id_base_conversao">
+            <option value="10">Decimal</option>
+            <option value="2">Binario</option>
+            <option value="8">Octal</option>
+            <option value="16">Hexadecimal</option>
+        </select>
+        <p id="id_mensagem"></p>
+        <button onclick="calcular()"> Converter </button>
+        <button onclick="location.reload();" class="button_back"> < </button>
+        `;
+    }
+
+
+    function unitaria() {
+        
+        document.querySelector('.container').innerHTML = `
+        <p class="esquerda">Converta seu número: </p>
+        <input type="text" id="id_num">
+        <select id="id_base">
+            <option value="2">Binario</option>
+            <option value="8">Octal</option>
+            <option value="10">Decimal</option>
+            <option value="16">Hexadecimal</option>
+        </select>
+        <label for="id_base_preferencia" class="esquerda">Escolha a base de conversão: </label>
+        <select id="id_base_preferencia">
+            <option value="20">Todos</option>
+            <option value="10">Decimal</option>
+            <option value="2">Binário</option>
+            <option value="16">Hexadecimal</option>
+            <option value="8">Octal</option>
+        </select>
+        <div id="resultado"></div>
+        <button onclick="converter()"> Converter </button>
+        <button onclick="location.reload();" class="button_back"> < </button>
+        `
+    }
+
+    function calcular() {
+        let n1 = id_n1.value;
+        let n2 = id_n2.value;
+        let baseN1 = id_baseN1.value;
+        let baseN2 = id_baseN2.value;
+        let operacao = id_operacao.value;
+        let base_conversao = id_base_conversao.value;
+        let valorN1;
+        let valorN2;
+
+        if (baseN1 == 2 || baseN1 == 8 || baseN1 == 16 || baseN1 == 10 || baseN2 == 2 || baseN2 == 8 || baseN2 == 16 || baseN2 == 10) {
+            valorN1 = parseInt(n1, baseN1).toString(10);
+            valorN2 = parseInt(n2, baseN2).toString(10);
+        } else {
+            alert("Valor ou base inválidos!");
+        }
+
+        if (operacao == "+") {
+            resultado = Number(valorN1) + Number(valorN2);
+        } else if (operacao == "-") {
+            resultado = Number(valorN1) - Number(valorN2);
+        } else if (operacao == "*") {
+            resultado = Number(valorN1) * Number(valorN2);
+        } else if (operacao == "/") {
+            resultado = Number(valorN1) / Number(valorN2);
+        }
+
+        convertido = parseInt(resultado, 10).toString(base_conversao);
+
+        if (convertido == "NaN") {
+            alert(`Valores inválidos! \nTente novamente.`);
+            location.reload()
+            return
+        };
+
+
+        id_mensagem.innerHTML = `<b>Resultado: </b>${convertido}.`;
+    }
+
+    function converter() {
+        let num = id_num.value;
+        let base = id_base.value;
+        let base_pref = id_base_preferencia.value;
+        let convertido;
+        let binario;
+        let octal;
+        let hexadecimal;
+        let decimal;
+
+        if (num.indexOf(8,9) && base == 8) {
+            alert(`Valor OCTAL inválido! \nTente novamente.`);
+            location.reload()
+            return
+        }
+
+        if (base == 2 || base == 8 || base == 16 || base == 10) {
+
+            convertido = parseInt(num, base).toString(base_pref);
+            resultado.innerHTML = `
+            Você converteu ${num} da base ${base} para a base ${base_pref}.
+            <br>
+            <b>${convertido}</b>`;
+
+        } else {
+
+            alert("Valor ou base inválidos!");
+
+        }
+        
+        
+        if (base_pref == 20) {
+
+            binario = parseInt(num, base).toString(2);
+            octal = parseInt(num, base).toString(8);
+            hexadecimal = parseInt(num, base).toString(16);
+            decimal = parseInt(num, base).toString(10);
+
+            resultado.innerHTML = `
+            <b>BINÁRIO: </b> ${binario}<br>
+            <b>OCTAL: </b> ${octal}<br>
+            <b>DECIMAL: </b> ${decimal}<br>
+            <b>HEXADECIMAL: </b> ${hexadecimal}
+            `;
+
+        } 
+        
+        
+    }
+</script>
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --terciary-color: #ff3838;
+    --primary-color: black;
+    --second-color: white;
+    --text--one: rgb(79, 79, 94);
+    --text--two: rgb(150, 145, 163);
+}
+
+body {
+    background-image: url(https://i.pinimg.com/1200x/79/8e/69/798e6999f2b0d875f8d9526f65be426b.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.container {
+    color: var(--second-color);
+    font-family: "SN Pro", sans-serif;
+    margin-top: 20px;
+    padding: 5%;
+    width: 90vh;
+    height: auto;
+    gap: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 60px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+h1 {
+    font-family: "SN Pro", sans-serif;
+    color: var(--terciary-color);
+    text-transform: uppercase;
+    font-weight: 900;
+}
+
+input {
+    border-radius: 20px;
+    width: 10vh;
+    height: 5vh;
+    padding-left: 10px;
+}
+
+.operacoes {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+}
+
+.operacoes>#operacao {
+    width: 40px;
+    height: 40px;
+}
+
+.operacoes>div {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+button {
+    width: 40vh;
+    height: 35px;
+    border-radius: 50px;
+    border: none;
+    background-color: var(--terciary-color);
+    color: var(--primary-color);
+    font-family: "SN Pro", sans-serif;
+    text-transform: uppercase;
+    font-weight: 800;
+}
+
+button:hover {
+    background-color: var(--primary-color);
+    color: var(--terciary-color);
+    border: 2px solid var(--terciary-color);
+    transition: ease-in-out 0.3s;
+    transform: scale(1.05);
+    font-family: "SN Pro", sans-serif;
+    text-transform: uppercase;
+}
+
+.button_back {
+    width: 5vh;
+    height: 5vh;
+    align-self: flex-start;
+    margin-top: -53px;
+}
+
+select {
+    background-color: var(--primary-color);
+    color: var(--second-color);
+    border-radius: 50px;
+    width: 100px;
+    height: 25px;
+    padding: 5px;
+}
+
+#id_operacao {
+    width: auto;
+    height: 40px;
+}
+
+.esquerda {
+    align-self: flex-start;
+    padding-left: 20px;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 15px;
+    font-family: monospace;
+}
+
+.principal {
+    margin: 5% 0px 2% 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 30px;
+}
+
+.principal>img {
+    width: 6vh;
+    height: 6vh;
+}
+
+</style>
+</html>
